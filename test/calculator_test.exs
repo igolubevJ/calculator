@@ -51,4 +51,29 @@ defmodule CalculatorTest do
       assert Calculator.sub(42, false) == nil
     end
   end
+
+  describe "mul/2" do
+    test "returns the result of multiplication" do
+      assert Calculator.mul(42, 2) == 84
+      assert Calculator.mul(42.5, 2.5) == 106.25
+      assert Calculator.mul(42, 2.5) == 105.0
+      assert Calculator.mul(42.5, 2) == 85.0
+    end
+
+    test "returns nil if we are passing wrong args" do
+      assert Calculator.mul("42", "2") == nil
+      assert Calculator.mul(42, "2") == nil
+      assert Calculator.mul("42", 2) == nil
+      assert Calculator.mul([42], 2) == nil
+      assert Calculator.mul(42, [2]) == nil
+      assert Calculator.mul({42}, 2) == nil
+      assert Calculator.mul(42, {2}) == nil
+      assert Calculator.mul(%{x: 42}, 2) == nil
+      assert Calculator.mul(42, %{x: 2}) == nil
+      assert Calculator.mul(nil, 2) == nil
+      assert Calculator.mul(42, nil) == nil
+      assert Calculator.mul(true, 2) == nil
+      assert Calculator.mul(42, false) == nil
+    end
+  end
 end
