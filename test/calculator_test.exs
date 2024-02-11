@@ -8,6 +8,10 @@ defmodule CalculatorTest do
       assert Calculator.add(42.5, 2.5) == 45
       assert Calculator.add(42, 2.5) == 44.5
       assert Calculator.add(42.5, 2) == 44.5
+
+      assert Calculator.add(42, -2) == 40
+      assert Calculator.add(-42, 2) == -40
+      assert Calculator.add(-42, -2) == -44
     end
 
     test "returns nil if we are passing wrong args" do
@@ -33,6 +37,10 @@ defmodule CalculatorTest do
       assert Calculator.sub(42.5, 2.5) == 40.0
       assert Calculator.sub(42, 2.5) == 39.5
       assert Calculator.sub(42.5, 2) == 40.5
+
+      assert Calculator.sub(42, -2) == 44
+      assert Calculator.sub(-42, 2) == -44
+      assert Calculator.sub(-42, -2) == -40
     end
 
     test "returns nil if we are passing wrong args" do
@@ -58,6 +66,10 @@ defmodule CalculatorTest do
       assert Calculator.mul(42.5, 2.5) == 106.25
       assert Calculator.mul(42, 2.5) == 105.0
       assert Calculator.mul(42.5, 2) == 85.0
+
+      assert Calculator.mul(42, -2) == -84
+      assert Calculator.mul(-42, 2) == -84
+      assert Calculator.mul(-42, -2) == 84
     end
 
     test "returns nil if we are passing wrong args" do
@@ -83,6 +95,10 @@ defmodule CalculatorTest do
       assert Calculator.div(42.5, 2.5) == 17.0
       assert Calculator.div(42, 2.5) == 16.8
       assert Calculator.div(42.5, 2) == 21.25
+
+      assert Calculator.div(42, -2) == -21
+      assert Calculator.div(-42, 2) == -21
+      assert Calculator.div(-42, -2) == 21
     end
 
     test "return nil if divisor is 0" do
