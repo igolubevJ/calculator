@@ -2,6 +2,36 @@ defmodule CalculatorTest do
   use ExUnit.Case
   doctest Calculator
 
+  defp bad_args() do
+    [
+      %{num_a: "42", num_b: "2"},
+      %{num_a: "42", num_b: 2},
+      %{num_a: 42, num_b: "2"},
+      %{num_a: [42], num_b: 2},
+      %{num_a: 42, num_b: [2]},
+      %{num_a: {42}, num_b: 2},
+      %{num_a: 42, num_b: {2}},
+      %{num_a: %{x: 42}, num_b: 2},
+      %{num_a: 42, num_b: %{x: 2}},
+      %{num_a: nil, num_b: 2},
+      %{num_a: "42", num_b: nil},
+      %{num_a: true, num_b: 2},
+      %{num_a: 42, num_b: false}
+    ]
+  end
+
+  defp assert_raise_arithmetic_error(func, num_a, num_b) do
+    assert_raise ArithmeticError, fn ->
+      func.(num_a, num_b)
+    end
+  end
+
+  defp assert_raise_argument_error(func, num_a, num_b) do
+    assert_raise ArgumentError, fn ->
+      func.(num_a, num_b)
+    end
+  end
+
   describe "add/2" do
     test "returns the result of addition two numbers" do
       assert Calculator.add(42, 2) == 44
@@ -15,19 +45,9 @@ defmodule CalculatorTest do
     end
 
     test "returns nil if we are passing wrong args" do
-      assert Calculator.add("42", "2") == nil
-      assert Calculator.add(42, "2") == nil
-      assert Calculator.add("42", 2) == nil
-      assert Calculator.add([42], 2) == nil
-      assert Calculator.add(42, [2]) == nil
-      assert Calculator.add({42}, 2) == nil
-      assert Calculator.add(42, {2}) == nil
-      assert Calculator.add(%{x: 42}, 2) == nil
-      assert Calculator.add(42, %{x: 2}) == nil
-      assert Calculator.add(nil, 2) == nil
-      assert Calculator.add(42, nil) == nil
-      assert Calculator.add(true, 2) == nil
-      assert Calculator.add(42, false) == nil
+      Enum.map(bad_args(), fn a ->
+        assert_raise_argument_error(&Calculator.add/2, a.num_a, a.num_b)
+      end)
     end
   end
 
@@ -43,20 +63,10 @@ defmodule CalculatorTest do
       assert Calculator.sub(-42, -2) == -40
     end
 
-    test "returns nil if we are passing wrong args" do
-      assert Calculator.sub("42", "2") == nil
-      assert Calculator.sub(42, "2") == nil
-      assert Calculator.sub("42", 2) == nil
-      assert Calculator.sub([42], 2) == nil
-      assert Calculator.sub(42, [2]) == nil
-      assert Calculator.sub({42}, 2) == nil
-      assert Calculator.sub(42, {2}) == nil
-      assert Calculator.sub(%{x: 42}, 2) == nil
-      assert Calculator.sub(42, %{x: 2}) == nil
-      assert Calculator.sub(nil, 2) == nil
-      assert Calculator.sub(42, nil) == nil
-      assert Calculator.sub(true, 2) == nil
-      assert Calculator.sub(42, false) == nil
+    test "raise argument error if we are passing wrong args" do
+      Enum.map(bad_args(), fn a ->
+        assert_raise_argument_error(&Calculator.sub/2, a.num_a, a.num_b)
+      end)
     end
   end
 
@@ -72,20 +82,10 @@ defmodule CalculatorTest do
       assert Calculator.mul(-42, -2) == 84
     end
 
-    test "returns nil if we are passing wrong args" do
-      assert Calculator.mul("42", "2") == nil
-      assert Calculator.mul(42, "2") == nil
-      assert Calculator.mul("42", 2) == nil
-      assert Calculator.mul([42], 2) == nil
-      assert Calculator.mul(42, [2]) == nil
-      assert Calculator.mul({42}, 2) == nil
-      assert Calculator.mul(42, {2}) == nil
-      assert Calculator.mul(%{x: 42}, 2) == nil
-      assert Calculator.mul(42, %{x: 2}) == nil
-      assert Calculator.mul(nil, 2) == nil
-      assert Calculator.mul(42, nil) == nil
-      assert Calculator.mul(true, 2) == nil
-      assert Calculator.mul(42, false) == nil
+    test "raise argument error if we are passing wrong args" do
+      Enum.map(bad_args(), fn a ->
+        assert_raise_argument_error(&Calculator.mul/2, a.num_a, a.num_b)
+      end)
     end
   end
 
@@ -101,27 +101,17 @@ defmodule CalculatorTest do
       assert Calculator.div(-42, -2) == 21
     end
 
-    test "return nil if divisor is 0" do
-      assert Calculator.div(42, 0) == nil
-      assert Calculator.div(42.0, 0) == nil
-      assert Calculator.div(42, 0.0) == nil
-      assert Calculator.div(42.0, 0.0) == nil
+    test "raise arithmetic error if divisor is 0" do
+      assert_raise_arithmetic_error(&Calculator.div/2, 42, 0)
+      assert_raise_arithmetic_error(&Calculator.div/2, 42.0, 0)
+      assert_raise_arithmetic_error(&Calculator.div/2, 42, 0.0)
+      assert_raise_arithmetic_error(&Calculator.div/2, 42.0, 0.0)
     end
 
-    test "returns nil if we are passing wrong args" do
-      assert Calculator.div("42", "2") == nil
-      assert Calculator.div(42, "2") == nil
-      assert Calculator.div("42", 2) == nil
-      assert Calculator.div([42], 2) == nil
-      assert Calculator.div(42, [2]) == nil
-      assert Calculator.div({42}, 2) == nil
-      assert Calculator.div(42, {2}) == nil
-      assert Calculator.div(%{x: 42}, 2) == nil
-      assert Calculator.div(42, %{x: 2}) == nil
-      assert Calculator.div(nil, 2) == nil
-      assert Calculator.div(42, nil) == nil
-      assert Calculator.div(true, 2) == nil
-      assert Calculator.div(42, false) == nil
+    test "raise argument error if we are passing wrong args" do
+      Enum.map(bad_args(), fn a ->
+        assert_raise_argument_error(&Calculator.div/2, a.num_a, a.num_b)
+      end)
     end
   end
 end

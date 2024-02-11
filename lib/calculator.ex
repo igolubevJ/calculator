@@ -16,15 +16,15 @@ defmodule Calculator do
       23.0
 
   If the function does not support the given arguments, the function
-  will return nil
+  raise `ArgumentError`.
 
   #### Examlpes
 
       iex> Calculator.add("42", 4)
-      nil
+      ** (ArgumentError) argument error
 
   The module has a division function that always returns `float`
-  and when divided by 0 will return `nil`
+  and when divided by 0 will raise `ArithmeticError`.
 
   #### Examples
 
@@ -32,14 +32,14 @@ defmodule Calculator do
       21.0
 
       iex> Calculator.div(42, 0)
-      nil
+      ** (ArithmeticError) bad argument in arithmetic expression
 
-      iex> Calculator.div(42, 0.0)
-      nil
+      iex Calculator.div(42, 0.0)
+      ** (ArithmeticError) bad argument in arithmetic expression
   """
 
   @doc """
-  The function returns the sum of two numbers
+  The function returns the sum of two numbers.
 
   #### Paramaters
 
@@ -56,15 +56,15 @@ defmodule Calculator do
       iex> Calculator.add(42, -2)
       40
 
-  Returns nil if invalid arguments are passed.
+  Raise `ArgumentError` if invalid arguments are passed.
 
   #### Examples
 
       iex> Calculator.add(42, :ok)
-      nil
+      ** (ArgumentError) argument error
 
       iex> Calculator.add(40, "A")
-      nil
+      ** (ArgumentError) argument error
   """
   @spec add(number(), number()) :: number() | nil
   def add(num_a, num_b), do: calculate({:add, num_a, num_b})
@@ -87,15 +87,15 @@ defmodule Calculator do
       iex> Calculator.sub(42, -2)
       44
 
-  Returns nil if invalid arguments are passed.
+  Raise `ArgumentError` if invalid arguments are passed.
 
   #### Examples
 
       iex> Calculator.sub(42, :ok)
-      nil
+      ** (ArgumentError) argument error
 
       iex> Calculator.sub(40, "A")
-      nil
+      ** (ArgumentError) argument error
   """
   @spec sub(number(), number()) :: number() | nil
   def sub(num_a, num_b), do: calculate({:sub, num_a, num_b})
@@ -118,15 +118,15 @@ defmodule Calculator do
       iex> Calculator.mul(42, -2)
       -84
 
-  Returns nil if invalid arguments are passed.
+  Raise `ArgumentError` if invalid arguments are passed.
 
   #### Examples
 
       iex> Calculator.mul(42, :ok)
-      nil
+      ** (ArgumentError) argument error
 
       iex> Calculator.mul(40, "A")
-      nil
+      ** (ArgumentError) argument error
   """
   @spec mul(number(), number()) :: number() | nil
   def mul(num_a, num_b), do: calculate({:mul, num_a, num_b})
@@ -150,25 +150,25 @@ defmodule Calculator do
       iex> Calculator.div(42, -2)
       -21.0
 
-  Returns nil if invalid arguments are passed.
+  Raise `ArgumentError` if invalid arguments are passed.
 
   #### Examples
 
-      iex> Calculator.div(42, :ok)
-      nil
+      iex>Calculator.div(42, :ok)
+      ** (ArgumentError) argument error
 
       iex> Calculator.div(40, "A")
-      nil
+      ** (ArgumentError) argument error
 
-  Returns nil if divider is 0
+  Raise `ArithmeticError` if divider is 0.
 
   #### Examples
 
       iex> Calculator.div(42, 0)
-      nil
+      ** (ArithmeticError) bad argument in arithmetic expression
 
       iex> Calculator.div(42, 0.0)
-      nil
+      ** (ArithmeticError) bad argument in arithmetic expression
   """
   @spec div(number(), number()) :: float() | nil
   def div(num_a, num_b), do: calculate({:div, num_a, num_b})
@@ -185,12 +185,14 @@ defmodule Calculator do
     num_a * num_b
   end
 
-  defp calculate({:div, _, 0}), do: nil
-  defp calculate({:div, _, 0.0}), do: nil
+  defp calculate({:div, _, 0}), do: raise ArithmeticError
+  defp calculate({:div, _, 0.0}), do: raise ArithmeticError
 
   defp calculate({:div, num_a, num_b}) when is_number(num_a) and is_number(num_b) do
     num_a / num_b
   end
 
-  defp calculate(_), do: nil
+  defp calculate(_) do
+    raise ArgumentError
+  end
 end
