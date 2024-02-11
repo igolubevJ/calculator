@@ -41,11 +41,6 @@ defmodule Calculator do
   @doc """
   The function returns the sum of two numbers.
 
-  #### Paramaters
-
-    - num_a: Number of type `int` or `float`
-    - num_b: Number of type `int` or `float`
-
   #### Examples
       iex> Calculator.add(42, 2)
       44
@@ -66,16 +61,11 @@ defmodule Calculator do
       iex> Calculator.add(40, "A")
       ** (ArgumentError) argument error
   """
-  @spec add(number(), number()) :: number() | nil
+  @spec add(number(), number()) :: number() | no_return()
   def add(num_a, num_b), do: calculate({:add, num_a, num_b})
 
   @doc """
   The function returns the result of the subtraction.
-
-  #### Paramaters
-
-    - num_a: Number of type `int` or `float`
-    - num_b: Number of type `int` or `float`
 
   #### Examples
       iex> Calculator.sub(42, 2)
@@ -97,16 +87,11 @@ defmodule Calculator do
       iex> Calculator.sub(40, "A")
       ** (ArgumentError) argument error
   """
-  @spec sub(number(), number()) :: number() | nil
+  @spec sub(number(), number()) :: number() | no_return()
   def sub(num_a, num_b), do: calculate({:sub, num_a, num_b})
 
   @doc """
   The function returns the result of the multiplication.
-
-  #### Paramaters
-
-    - num_a: Number of type `int` or `float`
-    - num_b: Number of type `int` or `float`
 
   #### Examples
       iex> Calculator.mul(42, 2)
@@ -128,17 +113,12 @@ defmodule Calculator do
       iex> Calculator.mul(40, "A")
       ** (ArgumentError) argument error
   """
-  @spec mul(number(), number()) :: number() | nil
+  @spec mul(number(), number()) :: number() | no_return()
   def mul(num_a, num_b), do: calculate({:mul, num_a, num_b})
 
   @doc """
   The function returns the result of the division.
   The result has type `float`.
-
-  #### Paramaters
-
-    - num_a: Number of type `int` or `float`
-    - num_b: Number of type `int` or `float`
 
   #### Examples
       iex> Calculator.div(42, 2)
@@ -170,7 +150,7 @@ defmodule Calculator do
       iex> Calculator.div(42, 0.0)
       ** (ArithmeticError) bad argument in arithmetic expression
   """
-  @spec div(number(), number()) :: float() | nil
+  @spec div(number(), number()) :: float() | no_return()
   def div(num_a, num_b), do: calculate({:div, num_a, num_b})
 
   defp calculate({:add, num_a, num_b}) when is_number(num_a) and is_number(num_b) do
@@ -185,8 +165,8 @@ defmodule Calculator do
     num_a * num_b
   end
 
-  defp calculate({:div, _, 0}), do: raise ArithmeticError
-  defp calculate({:div, _, 0.0}), do: raise ArithmeticError
+  defp calculate({:div, _, 0}), do: raise(ArithmeticError)
+  defp calculate({:div, _, 0.0}), do: raise(ArithmeticError)
 
   defp calculate({:div, num_a, num_b}) when is_number(num_a) and is_number(num_b) do
     num_a / num_b
