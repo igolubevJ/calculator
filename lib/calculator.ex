@@ -131,6 +131,45 @@ defmodule Calculator do
   @spec mul(number(), number()) :: number() | nil
   def mul(num_a, num_b), do: calculate({:mul, num_a, num_b})
 
+  @doc """
+  The function returns the result of the division.
+  The result has type `float`.
+
+  #### Paramaters
+
+    - num_a: Number of type `int` or `float`
+    - num_b: Number of type `int` or `float`
+
+  #### Examples
+      iex> Calculator.div(42, 2)
+      21.0
+
+      iex> Calculator.div(42.0, 2)
+      21.0
+
+      iex> Calculator.div(42, -2)
+      -21.0
+
+  Returns nil if invalid arguments are passed.
+
+  #### Examples
+
+      iex> Calculator.div(42, :ok)
+      nil
+
+      iex> Calculator.div(40, "A")
+      nil
+
+  Returns nil if divider is 0
+
+  #### Examples
+
+      iex> Calculator.div(42, 0)
+      nil
+
+      iex> Calculator.div(42, 0.0)
+      nil
+  """
   @spec div(number(), number()) :: float() | nil
   def div(num_a, num_b), do: calculate({:div, num_a, num_b})
 
