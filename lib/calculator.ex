@@ -100,6 +100,34 @@ defmodule Calculator do
   @spec sub(number(), number()) :: number() | nil
   def sub(num_a, num_b), do: calculate({:sub, num_a, num_b})
 
+  @doc """
+  The function returns the result of the multiplication.
+
+  #### Paramaters
+
+    - num_a: Number of type `int` or `float`
+    - num_b: Number of type `int` or `float`
+
+  #### Examples
+      iex> Calculator.mul(42, 2)
+      84
+
+      iex> Calculator.mul(42.0, 2)
+      84.0
+
+      iex> Calculator.mul(42, -2)
+      -84
+
+  Returns nil if invalid arguments are passed.
+
+  #### Examples
+
+      iex> Calculator.mul(42, :ok)
+      nil
+
+      iex> Calculator.mul(40, "A")
+      nil
+  """
   @spec mul(number(), number()) :: number() | nil
   def mul(num_a, num_b), do: calculate({:mul, num_a, num_b})
 
