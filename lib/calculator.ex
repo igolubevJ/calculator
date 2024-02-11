@@ -69,6 +69,34 @@ defmodule Calculator do
   @spec add(number(), number()) :: number() | nil
   def add(num_a, num_b), do: calculate({:add, num_a, num_b})
 
+  @doc """
+  The function returns the result of the subtraction.
+
+  #### Paramaters
+
+    - num_a: Number of type `int` or `float`
+    - num_b: Number of type `int` or `float`
+
+  #### Examples
+      iex> Calculator.sub(42, 2)
+      40
+
+      iex> Calculator.sub(42.0, 2)
+      40.0
+
+      iex> Calculator.sub(42, -2)
+      44
+
+  Returns nil if invalid arguments are passed.
+
+  #### Examples
+
+      iex> Calculator.sub(42, :ok)
+      nil
+
+      iex> Calculator.sub(40, "A")
+      nil
+  """
   @spec sub(number(), number()) :: number() | nil
   def sub(num_a, num_b), do: calculate({:sub, num_a, num_b})
 
