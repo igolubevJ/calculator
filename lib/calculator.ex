@@ -19,4 +19,11 @@ defmodule Calculator do
   end
 
   def mul(_, _), do: nil
+
+  @spec div(number(), number()) :: float() | nil
+  def div(num_a, num_b) when is_number(num_a) and is_number(num_b) do
+    num_a / num_b
+  end
+
+  def div(_, _), do: nil
 end

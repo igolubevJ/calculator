@@ -76,4 +76,29 @@ defmodule CalculatorTest do
       assert Calculator.mul(42, false) == nil
     end
   end
+
+  describe "div/2" do
+    test "returns the result of division" do
+      assert Calculator.div(42, 2) == 21.0
+      assert Calculator.div(42.5, 2.5) == 17.0
+      assert Calculator.div(42, 2.5) == 16.8
+      assert Calculator.div(42.5, 2) == 21.25
+    end
+
+    test "returns nil if we are passing wrong args" do
+      assert Calculator.div("42", "2") == nil
+      assert Calculator.div(42, "2") == nil
+      assert Calculator.div("42", 2) == nil
+      assert Calculator.div([42], 2) == nil
+      assert Calculator.div(42, [2]) == nil
+      assert Calculator.div({42}, 2) == nil
+      assert Calculator.div(42, {2}) == nil
+      assert Calculator.div(%{x: 42}, 2) == nil
+      assert Calculator.div(42, %{x: 2}) == nil
+      assert Calculator.div(nil, 2) == nil
+      assert Calculator.div(42, nil) == nil
+      assert Calculator.div(true, 2) == nil
+      assert Calculator.div(42, false) == nil
+    end
+  end
 end
