@@ -85,6 +85,13 @@ defmodule CalculatorTest do
       assert Calculator.div(42.5, 2) == 21.25
     end
 
+    test "return nil if divisor is 0" do
+      assert Calculator.div(42, 0) == nil
+      assert Calculator.div(42.0, 0) == nil
+      assert Calculator.div(42, 0.0) == nil
+      assert Calculator.div(42.0, 0.0) == nil
+    end
+
     test "returns nil if we are passing wrong args" do
       assert Calculator.div("42", "2") == nil
       assert Calculator.div(42, "2") == nil

@@ -23,6 +23,8 @@ defmodule Calculator do
     num_a * num_b
   end
 
+  defp calculate({:div, _, 0}), do: nil
+  defp calculate({:div, _, 0.0}), do: nil
   defp calculate({:div, num_a, num_b}) when is_number(num_a) and is_number(num_b) do
     num_a / num_b
   end
